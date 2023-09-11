@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
 import { environment } from '@app/env';
+
 
 @Component({
   selector: 'app-root',
@@ -11,4 +11,5 @@ export class AppComponent {
   title = 'angularyarn';
 
   environment = environment;
+
 }
