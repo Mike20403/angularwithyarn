@@ -7,7 +7,8 @@ import { ListuserComponent } from './components/users/listuser/listuser.componen
 import { CreateuserComponent } from './components/users/createuser/createuser.component';
 import { DetailsComponent } from './components/users/details/details.component';
 import { HomeComponent } from './components/home/home.component';
-import { AccountComponent } from './components/account/account.component';
+import {AuthComponent} from "./components/auth/auth.component";
+
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
     path: 'admin-dashboard', component: DashboardComponent
   },
   {
-    path: 'account', component: AccountComponent,
+    path: 'auth', component: AuthComponent,
     children: []
   },
   {

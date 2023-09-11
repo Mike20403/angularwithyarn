@@ -12,7 +12,9 @@ import { CreateuserComponent } from './components/users/createuser/createuser.co
 import { DetailsComponent } from './components/users/details/details.component';
 import { HomeComponent } from './components/home/home.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { AccountComponent } from './components/account/account.component';
+
+import { AuthComponent } from './components/auth/auth.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -23,10 +25,12 @@ import { AccountComponent } from './components/account/account.component';
     CreateuserComponent,
     DetailsComponent,
     HomeComponent,
-    AccountComponent
+    AuthComponent
   ],
   imports: [
+
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
     AppRoutingModule,
