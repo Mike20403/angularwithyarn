@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent {
+  userId!: String | null;
 
+  constructor(private route: ActivatedRoute) {
+
+    this.userId = this.route.snapshot.paramMap.get('id');
+
+  }
 }

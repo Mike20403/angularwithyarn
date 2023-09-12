@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {User} from "../../model/User";
+import { User } from '../../model/User';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-auth',
@@ -7,11 +8,16 @@ import {User} from "../../model/User";
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
-user:User = {
-  email:'',
-  password:''
-}
-onSubmit(login_form:any){
-  console.log(login_form.value);
-}
+  constructor() {
+
+  }
+
+  user: User = {
+    email: '',
+    password: ''
+  };
+
+  onSubmit(login_form: any) {
+    console.log(login_form.value);
+  }
 }

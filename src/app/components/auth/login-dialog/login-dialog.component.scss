@@ -1,0 +1,43 @@
+.example-form {
+  min-width: 150px;
+
+}
+
+
+.login-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Small devices (phones, portrait) */
+@media (max-width: 767px) {
+  /* Your styles for small screens go here */
+  .example-full-width {
+    width: 200px;
+  }
+}
+
+/* Small devices (phones, landscape) */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Your styles for small landscape screens go here */
+  .example-full-width {
+    width: 300px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Your styles for medium-sized screens go here */
+  .example-full-width {
+    width: 400px;
+  }
+}
+
+/* Large devices (laptops/desktops) */
+@media (min-width: 1200px) {
+  /* Your styles for large screens go here */
+  .example-full-width {
+    width: 500px;
+  }
+}
+

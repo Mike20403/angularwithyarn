@@ -1,0 +1,56 @@
+<div class="wrapper example-full-width mx-auto mt-36">
+  <mat-card>
+    <mat-card-content>
+
+      <h1 class="login-title">Login</h1>
+      <form [formGroup]="loginForm" class="example-form text-center" (ngSubmit)="onLogin()">
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="abc@gmail.com" name="email" required="true"
+                   type="email"
+            >
+
+          </mat-form-field>
+          <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.hasError('required')">
+            Email is required!!!
+          </mat-error>
+        </div>
+
+        <div>
+          <mat-form-field class="w-full ">
+            <mat-label>Leave a comment</mat-label>
+            <input formControlName="password" matInput placeholder="Abc123" name="password"
+                   [type]="showPassword ? 'text' : 'password'" required="true"
+                   pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$">
+            <mat-icon matSuffix
+                      (click)="toggleShowPassword()">  {{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </mat-form-field>
+
+          <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.hasError('pattern') ">
+            Password must be a
+            combination
+            of
+            lower-case,
+            upper-case,
+            numbers and at least 9 characters long
+          </mat-error>
+          <mat-error
+            *ngIf="loginForm.controls.password.touched && loginForm.controls.password.hasError('required')">
+            Password is required!!
+          </mat-error>
+        </div>
+        <div class="">
+          <a href="" class=" text-primary-500 float-left" [routerLink]="['..', 'forgotpw']" r>Forgot your
+            password?</a>
+          <a mat-raised-button color="primary" class="float-right" [routerLink]="['']">Login
+          </a>
+        </div>
+      </form>
+
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
