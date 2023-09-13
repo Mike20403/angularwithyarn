@@ -45,14 +45,23 @@
           </mat-error>
           <mat-error
             *ngIf="(loginForm.controls.password.touched && loginForm.controls.password.hasError('required'))||
-            (loginForm.controls.password.untouched && isSubmitted)">
+            (loginForm.controls.password.untouched && isSubmitted && loginForm.controls.password.hasError('required'))">
             Password is required!!
           </mat-error>
         </div>
         <div class="">
           <a href="" class=" text-primary-500 float-left" [routerLink]="['..', 'forgotpw']">Forgot your
             password?</a>
-          <button type="submit" mat-raised-button color="primary" class="float-right">Login</button>
+          <div>
+            <button type="submit" mat-raised-button color="primary" class="float-right">Login
+              <mat-icon iconPositionEnd>
+                <mat-spinner color="accent" diameter="16" *ngIf="isLoading$ | async">
+                </mat-spinner>
+              </mat-icon>
+            </button>
+
+          </div>
+
         </div>
 
       </form>

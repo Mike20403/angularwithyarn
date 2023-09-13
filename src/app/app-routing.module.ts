@@ -11,11 +11,13 @@ import { AccountComponent } from './components/account/account.component';
 import { ForgotpwComponent } from './components/account/forgotpw/forgotpw.component';
 import { LoginDialogComponent } from './components/auth/login-dialog/login-dialog.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AuthGuard } from './components/auth/auth.guard';
 
 
 const routes: Routes = [
   {
     path: '', component: HomeComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',

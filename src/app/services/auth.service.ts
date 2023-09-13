@@ -13,7 +13,7 @@ export class AuthService {
   }
 
 
-  login(username: string, password: string): Observable<User> {
+  login(username: string, password: string): Observable<any> {
     // Construct the login request body or parameters as needed by your API
     const requestBody = {
       username,
@@ -21,6 +21,6 @@ export class AuthService {
     };
 
     // Make an HTTP POST request to your login endpoint
-    return this.http.post<User>(`${environment.backend.apiUrl}/login`, requestBody);
+    return this.http.post<any>(`${environment.backend.apiUrl}/login`, requestBody);
   }
 }
