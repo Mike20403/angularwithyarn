@@ -14,7 +14,7 @@ export class AuthComponent {
 
   user: User = {
     email: '',
-    password: ''
+    token: ''
   };
 
   onSubmit(login_form: any) {

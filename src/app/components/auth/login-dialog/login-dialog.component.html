@@ -12,9 +12,17 @@
             >
 
           </mat-form-field>
-          <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.hasError('required')">
+          <mat-error
+            *ngIf="((loginForm.controls.email.touched ) && loginForm.controls.email.hasError('required')) ||
+(loginForm.controls.email.untouched && isSubmitted)">
             Email is required!!!
           </mat-error>
+          <mat-error
+            *ngIf="((loginForm.controls.email.touched ) && loginForm.controls.email.hasError('email')) ||
+(loginForm.controls.email.untouched && isSubmitted)">
+            Invalid Email Format!!!
+          </mat-error>
+
         </div>
 
         <div>
@@ -36,16 +44,17 @@
             numbers and at least 9 characters long
           </mat-error>
           <mat-error
-            *ngIf="loginForm.controls.password.touched && loginForm.controls.password.hasError('required')">
+            *ngIf="(loginForm.controls.password.touched && loginForm.controls.password.hasError('required'))||
+            (loginForm.controls.password.untouched && isSubmitted)">
             Password is required!!
           </mat-error>
         </div>
         <div class="">
-          <a href="" class=" text-primary-500 float-left" [routerLink]="['..', 'forgotpw']" r>Forgot your
+          <a href="" class=" text-primary-500 float-left" [routerLink]="['..', 'forgotpw']">Forgot your
             password?</a>
-          <a mat-raised-button color="primary" class="float-right" [routerLink]="['']">Login
-          </a>
+          <button type="submit" mat-raised-button color="primary" class="float-right">Login</button>
         </div>
+
       </form>
 
 

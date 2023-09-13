@@ -1,11 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from '../model/User';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor() {
+  constructor(private http: HttpClient) {
 
   }
-  
+
+
+  login(username: string, password: string): Observable<User> {
+    // Construct the login request body or parameters as needed by your API
+    const requestBody = {
+      username,
+      password,
+    };
+
+    // Make an HTTP POST request to your login endpoint
+    return this.http.post<User>(`${environment.backend.apiUrl}/login`, requestBody);
+  }
 }

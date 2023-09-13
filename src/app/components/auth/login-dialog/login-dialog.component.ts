@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogTemplate } from './dialogtemplate/dialog-template';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
+import { Store } from '@ngrx/store';
+import * as authAction from '../ngrx/auth-actions';
 
 @Component({
   selector: 'app-login-dialog',
@@ -11,6 +13,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class LoginDialogComponent {
   showPassword: boolean = false;
+  isSubmitted: boolean = false;
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$')]),
@@ -18,12 +21,22 @@ export class LoginDialogComponent {
   });
 
   constructor(private matdialog: MatDialog,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private store: Store) {
 
   }
 
   onLogin() {
-    console.log('test');
+    this.isSubmitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+    console.log(this.loginForm.value);
+
+    this.store.dispatch(authAction.login({
+      email: this.loginForm.value.email!,
+      password: this.loginForm.value.password!,
+    }));
   }
 
   toggleShowPassword() {

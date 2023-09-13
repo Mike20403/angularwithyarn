@@ -22,13 +22,13 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@app/env';
 import { CustomSerializer } from './custom-route-serializer';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthEffects } from './components/auth/ngrx/auth-effects';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-
-
   ],
   imports: [
     BrowserModule,
@@ -40,11 +40,13 @@ import { CustomSerializer } from './custom-route-serializer';
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer
-    })
-  
+    }),
+    HttpClientModule,
+
+
   ],
   providers: [],
   bootstrap: [AppComponent],
