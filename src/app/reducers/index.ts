@@ -3,16 +3,31 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
-
 import { environment } from '@app/env';
 import { AuthState } from '../components/auth/ngrx/auth-reducer';
 import * as fromAuth from '../components/auth/ngrx/auth-reducer';
-import { Observable } from 'rxjs';
 
+import { userReducer } from '../components/users/ngrx/user.reducer';
+import { userAdapter, UserState } from '../components/users/ngrx/user.state';
+
+
+// Create a feature selector to select the UserState from the store
+export const selectUserState = createFeatureSelector<UserState>('users');
+// Use userAdapter to generate selectors for entities
+export const {
+  selectAll,
+  selectEntities
+} = userAdapter.getSelectors(selectUserState);
+export const selectUserEntities = selectEntities;
+export const selectAllUsers = selectAll;
+// Create a selector to get a user by their ID
+export const selectUserById = () =>
+  createSelector(selectUserEntities, (entities) => entities);
 
 export interface State {
   router: RouterReducerState<any>;
   authState: AuthState;
+  users: UserState;
 }
 
 export const selectState = (state: State) => state;
@@ -29,11 +44,13 @@ export const selectAuthError = createSelector(
   selectAuthState,
   (authState: AuthState) => authState.error
 );
-
 export const reducers: ActionReducerMap<State> = {
   router: routerReducer,
-  authState: fromAuth.authReducer
+  authState: fromAuth.authReducer,
+  users: userReducer
 };
 
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+
+

@@ -12,10 +12,6 @@ export class AuthComponent {
 
   }
 
-  user: User = {
-    email: '',
-    token: ''
-  };
 
   onSubmit(login_form: any) {
     console.log(login_form.value);

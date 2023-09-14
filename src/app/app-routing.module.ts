@@ -1,17 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { UsersComponent } from './components/users/users.component';
-import { ListuserComponent } from './components/users/listuser/listuser.component';
-import { CreateuserComponent } from './components/users/createuser/createuser.component';
-import { DetailsComponent } from './components/users/details/details.component';
 import { HomeComponent } from './components/home/home.component';
-import { AuthComponent } from './components/auth/auth.component';
-import { AccountComponent } from './components/account/account.component';
-import { ForgotpwComponent } from './components/account/forgotpw/forgotpw.component';
-import { LoginDialogComponent } from './components/auth/login-dialog/login-dialog.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './components/auth/auth.guard';
+import { LoginGuard } from './components/login.guard';
 
 
 const routes: Routes = [
@@ -35,8 +27,13 @@ const routes: Routes = [
     ]
   }, {
     path: 'auth',
+    canActivate: [LoginGuard],
     loadChildren: () => import('./components/auth/auth.module').then(x => x.AuthModule)
   },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 
 
 ];

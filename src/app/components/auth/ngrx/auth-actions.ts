@@ -9,7 +9,8 @@ export const login = createAction(
 export const loginSuccess = createAction('[Auth] Login Sucess',
   props<{ token: string }>()
 );
-
+export const setUser = createAction('[Auth] Set user',
+  props<{ email: string, token: string }>());
 export const logout = createAction('[Auth] Logout');
 export const autoLogin = createAction('[Auth] Auto Login');
 export const loginFailure = createAction('[Auth] Login Failure', props<{ error: string }>());

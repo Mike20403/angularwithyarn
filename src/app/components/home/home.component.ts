@@ -15,4 +15,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(authActions.autoLogin());
   }
+
+  onLogout() {
+    this.store.dispatch(authActions.logout());
+  }
 }

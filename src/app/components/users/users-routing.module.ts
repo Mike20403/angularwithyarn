@@ -1,7 +1,7 @@
 import { UsersComponent } from './users.component';
-import { ListuserComponent } from './listuser/listuser.component';
-import { CreateuserComponent } from './createuser/createuser.component';
-import { DetailsComponent } from './details/details.component';
+import { ListUserComponent } from './list-user/list-user.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
@@ -11,13 +11,13 @@ const routes: Routes = [{
   children:
     [
       {
-        path: '', component: ListuserComponent
+        path: '', component: ListUserComponent
       },
       {
-        path: 'create', component: CreateuserComponent
+        path: 'create', component: CreateUserComponent
       },
       {
-        path: ':id', component: DetailsComponent
+        path: ':id', component: UserDetailsComponent
       },
       {
         path: '**', redirectTo: '', pathMatch: 'full'

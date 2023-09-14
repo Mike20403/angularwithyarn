@@ -37,10 +37,7 @@ export class AuthGuard {
 
       const decodedToken: any = jwt_decode(token); // Decode the JWT token
       console.log('[AuthGuard]', decodedToken);
-      const user: User = {
-        email: decodedToken.email,
-        token: token
-      };
+  
       //
       const expirationDate = new Date(decodedToken.exp * 1000); // Convert expiration timestamp to a Date object
       console.log(expirationDate);
@@ -48,7 +45,7 @@ export class AuthGuard {
       if (expirationDate <= new Date()) {
         //   // Token is expired, dispatch a logout action or handle expiration as needed
         this.store.dispatch(authActions.logout());
-        this.router.navigate(['/auth']);
+
         return false;
       }
       // this.store.dispatch(authActions.loginSuccess({ user }));

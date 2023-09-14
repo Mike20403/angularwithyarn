@@ -1,76 +1,124 @@
 <!--Table-->
 
-<!--      <div class="spinner-container " *ngIf="dataSource.data == null">-->
-<!--        <mat-spinner class="ms-auto me-auto"></mat-spinner>-->
-<!--      </div>-->
-<table class="mat-elevation-z8 mt-4 full-width"
-       style="width: 300px;max-width: 40%"
-       mat-table
-       [dataSource]="users$ | async"
-       matSort matSortActive="id"
+<div class=" mt-4 mx-10">
 
-       matSortDisableClear>
+  <div class="wrapper mb-4">
+    <h1 class="font-bold text-5xl inline">Users</h1>
+    <button mat-raised-button class=" text-xl float-right" color="primary"
+            [routerLink]="['./create']">Create
+    </button>
+  </div>
 
-  <ng-container matColumnDef="_id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by ID"> ID</th>
-    <td mat-cell *matCellDef="let user;let id = index "> {{user._id}} </td>
+  <div class="grid grid-cols-1 p-4 mat-elevation-z8 " style="position: relative;">
 
-  </ng-container>
-  <ng-container matColumnDef="_title">
+    <form [formGroup]="mat_select">
+      <div>
+        <mat-form-field>
+          <mat-label>Select an option</mat-label>
+          <mat-select formControlName="statusControl">
+            <mat-option>None</mat-option>
+            <mat-option value="--">All</mat-option>
+            <mat-option value="active">active</mat-option>
+            <mat-option value="inactive">inactive</mat-option>
+          </mat-select>
 
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Title"> Title</th>
-    <td mat-cell *matCellDef="let user">
-      <div class="row p-3">
-        <div class="col-xxl-8 text-center fs-5 mt-auto mb-auto">{{user._title}}</div>
-        <div class="col-xxl-4"><img style="width: 100%;height: 100%" [src]="user._imgURL" alt=""></div>
+        </mat-form-field>
+        <mat-form-field class="example-full-width float-right">
+          <mat-label>Search</mat-label>
+          <input matInput formControlName="searchControl" placeholder="maikhuong" value="">
+        </mat-form-field>
       </div>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="_article">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Article"> Article</th>
-    <td mat-cell *matCellDef="let user">
-      <div class="row">{{user._article}}</div>
-    </td>
-  </ng-container>
 
-  <ng-container matColumnDef="_imgURL">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by ImgURL"> ImgURL</th>
-    <td mat-cell *matCellDef="let user">
-      <div class="row">{{user._imgURL}}</div>
-    </td>
-  </ng-container>
+    </form>
+    <div style="display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.6);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;" *ngIf="isLoading == true">
+      <mat-progress-spinner color="accent" mode="indeterminate" diameter="50">
+      </mat-progress-spinner>
+    </div>
 
-  <!--  <ng-container matColumnDef="deleteRow">-->
-  <!--    <th mat-header-cell *matHeaderCellDef>Action</th>-->
-  <!--    <td mat-cell *matCellDef="let user">-->
-  <!--      <button-->
-  <!--        mat-button-->
-  <!--        class="button-remove z-50 border-0 text-white bg-danger fw-bold"-->
-  <!--        (click)="removeRow(user._id,$event)"-->
-  <!--      >-->
-  <!--        Delete-->
-  <!--      </button>-->
-  <!--      <button-->
-  <!--        mat-button-->
-  <!--        class="ms-3 z-50 border-0 text-white bg-success fw-bold"-->
-  <!--        (click)="editPost(user,$event)"-->
-  <!--      >-->
-  <!--        Edit-->
-  <!--      </button>-->
-  <!--    </td>-->
+    <table class="full-width"
+           mat-table
+           [dataSource]="users"
+           matSort matSortActive="id"
+           matSortDisableClear>
+      >
+      <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email"> Email</th>
+        <td mat-cell *matCellDef="let user"> {{user.username}} </td>
 
-  <!--  </ng-container>-->
+      </ng-container>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name</th>
+        <td mat-cell *matCellDef="let user">{{user.firstname + ' ' + user.lastname}}
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)" style="cursor: pointer">
-  </tr>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="PhoneNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Phone Number"> Phone Number
+        </th>
+        <td mat-cell *matCellDef="let user">
+          {{user.phoneNumber}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status">Status</th>
+        <td mat-cell *matCellDef="let user">
+          {{user.status}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Created date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by created date"> Created date
+        </th>
+        <td mat-cell *matCellDef="let user">
+          {{user.createdDate}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Updated date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by updated date">Updated date
+        </th>
+        <td mat-cell *matCellDef="let user">
+          {{user.updatedDate}}
+        </td>
+      </ng-container>
 
-</table>
+      <!--  <ng-container matColumnDef="deleteRow">-->
+      <!--    <th mat-header-cell *matHeaderCellDef>Action</th>-->
+      <!--    <td mat-cell *matCellDef="let user">-->
+      <!--      <button-->
+      <!--        mat-button-->
+      <!--        class="button-remove z-50 border-0 text-white bg-danger fw-bold"-->
+      <!--        (click)="removeRow(user._id,$event)"-->
+      <!--      >-->
+      <!--        Delete-->
+      <!--      </button>-->
+      <!--      <button-->
+      <!--        mat-button-->
+      <!--        class="ms-3 z-50 border-0 text-white bg-success fw-bold"-->
+      <!--        (click)="editPost(user,$event)"-->
+      <!--      >-->
+      <!--        Edit-->
+      <!--      </button>-->
+      <!--    </td>-->
 
-<mat-paginator [pageSizeOptions]="[5, 10, 20]"
-               showFirstLastButtons
-               aria-label="Select page of periodic elements">
-</mat-paginator>
+      <!--  </ng-container>-->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)" style="cursor: pointer">
+      </tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+</div>
 
 
 <!--<div class="header">-->

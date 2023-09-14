@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-createuser',
-  templateUrl: './createuser.component.html',
-  styleUrls: ['./createuser.component.scss']
+  templateUrl: './create-user.component.html',
+  styleUrls: ['./create-user.component.scss']
 })
-export class CreateuserComponent {
+export class CreateUserComponent {
   constructor() {
   }
 
@@ -15,7 +15,8 @@ export class CreateuserComponent {
     lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.email]),
     password: new FormControl(''),
-    phoneNum: new FormControl('')
+    phoneNum: new FormControl(''),
+    status: new FormControl(true)
 
   });
 

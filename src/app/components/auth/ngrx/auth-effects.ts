@@ -24,8 +24,11 @@ export class AuthEffects {
             // Check if the token is expired
             if (expirationDate <= new Date()) {
               // Token is expired, dispatch a logout action or handle expiration as needed
+
             }
+            return this.store.dispatch(authActions.setUser({ email: decodedToken.email, token: token! }));
           }
+
         }),
         switchMap(() => of({ type: 'NO_ACTION' })) // You may need to dispatch a different action or none at all
       ));
@@ -71,6 +74,7 @@ export class AuthEffects {
         ofType(authActions.logout),
         tap((action) => {
           localStorage.removeItem('jwtToken');
+          this.router.navigate(['/auth']);
         })
       )
     , { dispatch: false });
