@@ -36,11 +36,11 @@ export class AuthGuard {
     if (token) {
 
       const decodedToken: any = jwt_decode(token); // Decode the JWT token
-      console.log('[AuthGuard]', decodedToken);
-  
+
+
       //
       const expirationDate = new Date(decodedToken.exp * 1000); // Convert expiration timestamp to a Date object
-      console.log(expirationDate);
+
       // // Check if the token is expired
       if (expirationDate <= new Date()) {
         //   // Token is expired, dispatch a logout action or handle expiration as needed

@@ -14,13 +14,10 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    console.log('test');
+
     const api = environment.backend.userApi;
-    const token = localStorage.getItem('jwtToken'); // Replace with your actual JWT token
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-    return this.http.get<User[]>(api, { headers });
+
+    return this.http.get<User[]>(api);
   }
 
   addUser(user: any): Observable<User> {
@@ -39,10 +36,6 @@ export class UserService {
 
     console.log('[getFilterUsers]: ');
     let api = environment.backend.userApi;
-    const token = localStorage.getItem('jwtToken'); // Replace with your actual JWT token
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
 
     let params = new HttpParams();
     if (action.status != '--') {
@@ -51,7 +44,7 @@ export class UserService {
     if (action.searchQuery != '') {
       params = params.append('searchQuery', action.searchQuery);
     }
-    return this.http.get<User[]>(api, { headers, params });
+    return this.http.get<User[]>(api, { params });
 
 
   }
