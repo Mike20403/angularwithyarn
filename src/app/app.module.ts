@@ -12,10 +12,11 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@app/env';
 import { CustomSerializer } from './custom-route-serializer';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AuthEffects } from './components/auth/ngrx/auth-effects';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { UserEffects } from './components/users/ngrx/user.effects';
+import {UserInterceptor} from "./components/users/user.interceptor";
 
 @NgModule({
   declarations: [
@@ -41,13 +42,17 @@ import { UserEffects } from './components/users/ngrx/user.effects';
 
 
   ],
-  providers: [],
+  providers: [ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: UserInterceptor,
+    multi: true,
+  },],
   bootstrap: [AppComponent],
 
 })
 export class AppModule {
   constructor() {
-    console.log('AAA');
+
   }
 
 }

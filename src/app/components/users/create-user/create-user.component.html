@@ -1,4 +1,4 @@
-<div class="wrapper p-4">
+<div class="wrapper p-4 w-1/2">
   <h1 class="font-bold text-5xl m-3 ">Create User</h1>
   <hr>
   <form [formGroup]="createUserForm" class="example-form text-center" (ngSubmit)="onCreate()">
@@ -15,7 +15,6 @@
                type="text">
         <mat-error>Last name is required!!</mat-error>
       </mat-form-field>
-
     </div>
 
     <div class="line2">
@@ -24,7 +23,7 @@
         <input formControlName="email" matInput placeholder="abc@gmail.com" name="email" required="true"
                type="email">
         <mat-error
-          *ngIf="createUserForm.controls['email'].touched && createUserForm.controls['email'].hasError('required')">
+         >
           Email is required!!!
         </mat-error>
       </mat-form-field>
@@ -49,9 +48,17 @@
           Phone number is required!!!
         </mat-error>
       </mat-form-field>
+      <div class="w-1/2 p-2 inline-block"><mat-checkbox class="float-left my-0" formControlName="status" >Active</mat-checkbox></div>
 
-      <mat-checkbox formControlName="status" class="w-1/2 p-2">Active</mat-checkbox>
+<<<<<<< HEAD
+=======
 
+
+    </div>
+    <hr>
+    <div class="line3 mt-3">
+      <button mat-raised-button type="submit" color="primary" class="float-right">Create</button>
+>>>>>>> 7b4bacf16693a95fded826eda3a6f790b33c23c5
     </div>
     <hr>
     <div class="line3">
