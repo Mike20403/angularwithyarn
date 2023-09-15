@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { State } from '../../../reducers';
+import { addUser } from '../ngrx/user.actions';
+import { User } from '../../../model/User';
 
 @Component({
   selector: 'app-createuser',
@@ -7,9 +11,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent {
-  constructor() {
+  constructor(private store:Store<State>) {
   }
 
+  showPassword: boolean = false;
   createUserForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
@@ -20,8 +25,18 @@ export class CreateUserComponent {
 
   });
 
-  onCreate() {
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
 
+
+  onCreate() {
+    const user = {
+      username:this.createUserForm.controls['email'].value,
+      firstname:this.createUserForm.controls['firstname']
+    }
+  }
+    this.store.dispatch(addUser({))
   }
 
 }

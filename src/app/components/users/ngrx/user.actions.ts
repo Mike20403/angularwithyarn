@@ -6,7 +6,10 @@ import { filter } from 'rxjs';
 export const loadUsers = createAction('[User] Load Users');
 export const loadUsersFailure = createAction('[User] Load Users Failure', props<{ error: string }>());
 export const loadUsersSuccess = createAction('[User] Load Users Success', props<{ users: User[] }>());
-export const addUser = createAction('[User] Add User', props<{ user: User }>());
+export const addUser = createAction('[User] Add User', props<{
+  username: string, firstname: string,
+  lastname: string, password: string, phoneNumber: string, status: string
+}>());
 export const addUserSuccess = createAction('[User] Add User Success', props<{ user: User }>());
 export const addUserFailure = createAction('[User] Add  Users Failure', props<{ error: string }>());
 export const updateUser = createAction('[User] Update User', props<{ user: User }>());

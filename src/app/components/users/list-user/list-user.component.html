@@ -1,7 +1,6 @@
-<!--Table-->
-
 <div class=" mt-4 mx-10">
 
+  <!--Table-->
   <div class="wrapper mb-4">
     <h1 class="font-bold text-5xl inline">Users</h1>
     <button mat-raised-button class=" text-xl float-right" color="primary"
@@ -9,27 +8,26 @@
     </button>
   </div>
 
+  <form [formGroup]="mat_select">
+    <div>
+      <mat-form-field>
+        <mat-label>Select an option</mat-label>
+        <mat-select formControlName="statusControl">
+          <mat-option>None</mat-option>
+          <mat-option value="--">All</mat-option>
+          <mat-option value="active">active</mat-option>
+          <mat-option value="inactive">inactive</mat-option>
+        </mat-select>
+
+      </mat-form-field>
+      <mat-form-field class="example-full-width float-right">
+        <mat-label>Search</mat-label>
+        <input matInput formControlName="searchControl" placeholder="maikhuong" value="">
+      </mat-form-field>
+    </div>
+
+  </form>
   <div class="grid grid-cols-1 p-4 mat-elevation-z8 " style="position: relative;">
-
-    <form [formGroup]="mat_select">
-      <div>
-        <mat-form-field>
-          <mat-label>Select an option</mat-label>
-          <mat-select formControlName="statusControl">
-            <mat-option>None</mat-option>
-            <mat-option value="--">All</mat-option>
-            <mat-option value="active">active</mat-option>
-            <mat-option value="inactive">inactive</mat-option>
-          </mat-select>
-
-        </mat-form-field>
-        <mat-form-field class="example-full-width float-right">
-          <mat-label>Search</mat-label>
-          <input matInput formControlName="searchControl" placeholder="maikhuong" value="">
-        </mat-form-field>
-      </div>
-
-    </form>
     <div style="display: flex;
         justify-content: center;
         align-items: center;
@@ -121,29 +119,7 @@
 </div>
 
 
-<!--<div class="header">-->
-<!--  <h1 style="font-size: 50px" class="font-bold">Users</h1>-->
-<!--  <button mat-raised-button color="primary" [routerLink]="['create']">Create</button>-->
-<!--</div>-->
 
-<!--<ul style="font-size: 30px">-->
-<!--  <li>-->
-<!--    <button mat-button href="mat" routerLink="1">-->
-<!--      User 1-->
-<!--    </button>-->
-<!--  </li>-->
-<!--  <li>-->
-<!--    <button mat-button href="" routerLink="2">-->
-<!--      User 2-->
-<!--    </button>-->
-<!--  </li>-->
-<!--  <li>-->
-<!--    <button mat-button href="" routerLink="3">-->
-<!--      User 3-->
-<!--    </button>-->
-<!--  </li>-->
-
-<!--</ul>-->
 
 
 

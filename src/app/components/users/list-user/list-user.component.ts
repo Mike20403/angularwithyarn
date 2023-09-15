@@ -49,7 +49,7 @@ export class ListUserComponent implements OnInit {
     //   this.onStatusChanged(selectedValue);
     //
     // });
-
+    this.isLoading = true;
     // Dispatch the action to load users (assuming you have a loadUsers action)
     this.store.dispatch(userActions.loadUsers());
 
@@ -67,7 +67,10 @@ export class ListUserComponent implements OnInit {
   }
 
   onStatusChanged(changedValues: { status: string | null | undefined; search: string | null | undefined; }) {
-    this.store.dispatch(userActions.changeFilter({ status: changedValues.status!, searchQuery: changedValues.search! }));
+    this.store.dispatch(userActions.changeFilter({
+      status: changedValues.status!,
+      searchQuery: changedValues.search!
+    }));
   }
 
   getRecord(row: User) {
