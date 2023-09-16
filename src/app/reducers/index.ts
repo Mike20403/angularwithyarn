@@ -24,8 +24,9 @@ export const selectAllUsers = selectAll;
 export const selectUserError = createSelector(selectUserState,
   (state) => state.error);
 // Create a selector to get a user by their ID
-export const selectUserById = (userid: string) =>
-  createSelector(selectUserEntities, (entities) => entities[userid]);
+
+
+
 
 export interface State {
   router: RouterReducerState<any>;
@@ -35,6 +36,16 @@ export interface State {
 
 
 export const selectState = (state: State) => state;
+export const selectCurrentUser = createSelector(selectState,
+  (state) => state.users.currentUser)
+export const selectUserloading = createSelector(
+  selectState,
+  (state) => state.users.loading
+);
+export const selectPaginator = createSelector(
+  selectState,
+    (state) => state.users.paginator
+)
 export const selectisEdited = createSelector(selectState, (state) =>
   state.users.isEdited);
 export const selectAuthState = (state: State) => state.authState;

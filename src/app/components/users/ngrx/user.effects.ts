@@ -7,9 +7,10 @@ import { UserService } from '../../../services/user.service';
 import * as userActions from './user.actions';
 import { User } from '../../../model/User';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import {createAction, Store} from '@ngrx/store';
 import { State } from '../../../reducers';
-import { loadUsers } from './user.actions';
+import {loadUserByID, loadUserByIDSuccess, loadUsers} from './user.actions';
+import {HttpResponse} from "@angular/common/http";
 
 @Injectable()
 export class UserEffects {
@@ -22,21 +23,45 @@ export class UserEffects {
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(userActions.loadUsers),
-      switchMap(() =>
-        this.userService.getUsers().pipe(
-          map((users: any) => userActions.loadUsersSuccess({ users })),
-          catchError((error) => of(userActions.loadUsersFailure({ error: error.message })))
-        )
+      switchMap((payload:{status:string,pageNumber:string,pageSize:string,searchQuery:string}) =>
+        this.userService.getUsers(payload).pipe(
+          map((response: HttpResponse<User[]>) => {
+            // Access the X-Paginator header from the response headers
+            const xPaginatorHeader:string = response.headers.get('x-pagination')!;
+            const res:{pageNumber:number,pageSize:number,totalPages:number,totalCount:number,hasPrevious:boolean,hasNext:boolean} = JSON.parse(xPaginatorHeader);
+
+            // Do something with xPaginatorHeader here
+            return userActions.loadUsersSuccess({users: response.body!, paginator:res})
+            // Return the response body (array of users)
+
+          }),
+          catchError((error) => of(userActions.loadUsersFailure({ error: error.message }))
+        ))
       )
     )
   );
+  loadUserByID$ = createEffect(
+    () => this.actions$.pipe(
+      ofType(userActions.loadUserByID),
+      switchMap((payload:{id:string}) => {
 
+          return this.userService.getUserByID(payload).pipe(
+            map((user:User) => {
+              return userActions.loadUserByIDSuccess({user:user});
+            }),
+            catchError((error) => of(userActions.loadUserByIDFailure(error)))
+          )
+      })
+    ),
+  );
   changeFilter$ = createEffect(() =>
     this.actions$.pipe(
       ofType(userActions.changeFilter),
       switchMap((action) => {
-        return this.userService.getFilterUsers(action).pipe(
-          map((users: any) => userActions.loadUsersSuccess({ users })),
+        return this.userService.getUsers(action).pipe(
+          map((users: any) => {
+
+            return userActions.loadUsersSuccess({ users,paginator:users.paginator })}),
           catchError((error) => of(userActions.loadUsersFailure({ error: error.message })))
         );
       })
@@ -86,8 +111,8 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(userActions.updateUserSuccess),
-        tap(() => {
-          this.store.dispatch(loadUsers());
+        tap((user ) => {
+          this.store.dispatch(loadUserByID({id:user.user.id}));
 
         })
       ), { dispatch: false }
@@ -109,7 +134,6 @@ export class UserEffects {
       this.actions$.pipe(
         ofType(userActions.deleteUserSuccess),
         tap(() => {
-          this.store.dispatch(loadUsers());
           this.router.navigate(['/users']);
         })
       ), { dispatch: false }

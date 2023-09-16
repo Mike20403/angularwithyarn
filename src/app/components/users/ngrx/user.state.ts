@@ -8,11 +8,13 @@ export interface UserState extends EntityState<User> {
   selectedId: string
   loading: boolean,
   error: string,
+  currentUser:User,
   filter: {
     searchQuery: string,
     status: string
   },
   isEdited: boolean,
+  paginator:{pageNumber:number,pageSize:number,totalPages:number,totalCount:number,hasPrevious:boolean,hasNext:boolean},
 }
 
 export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>();
@@ -23,6 +25,8 @@ export const initialUserState: UserState = userAdapter.getInitialState({
   isEdited: false,
   loading: false,
   error: '',
+  currentUser:{} as User,
+  paginator : {} as {pageNumber:number,pageSize:number,totalPages:number,totalCount:number,hasPrevious:boolean,hasNext:boolean},
   filter: {
     searchQuery: '',
     status: ''

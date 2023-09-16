@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { User } from '../../../model/User';
 import { Store } from '@ngrx/store';
-import { selectisEdited, selectUserById, State } from '../../../reducers';
-import { deleteUser, loadUsers, updateUser } from '../ngrx/user.actions';
+import {selectCurrentUser, selectisEdited, State} from '../../../reducers';
+import {deleteUser, loadUserByID,  updateUser} from '../ngrx/user.actions';
 
 @Component({
   selector: 'app-details',
@@ -16,21 +16,23 @@ export class UserDetailsComponent {
   isEdited: boolean = false;
 
   constructor(private route: ActivatedRoute,
+              private router:Router,
               private store: Store<State>) {
 
     this.userId = this.route.snapshot.paramMap.get('id')!;
-    this.store.dispatch(loadUsers());
-    this.store.select(selectUserById(this.userId)).subscribe(
+    this.store.dispatch(loadUserByID({id:this.userId}));
+    this.store.select(selectCurrentUser).subscribe(
       (user) => {
         if (user) {
           this.user = user;
         }
       });
+
   }
 
   onUpdate($event: { firstname: string; lastname: string; phoneNumber: string; status: string }) {
     this.store.dispatch(updateUser({ ...$event, id: this.userId }));
-    this.store.dispatch(loadUsers());
+    this.store.dispatch(loadUserByID({id:this.userId}));
     this.store.select(selectisEdited).subscribe(
       (isEdited) => {
         this.isEdited = isEdited;
