@@ -12,7 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule,
+  imports: [
+    FormsModule,
+    CommonModule,
     MatSlideToggleModule,
     FormsModule,
     MatDialogModule,

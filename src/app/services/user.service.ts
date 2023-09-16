@@ -9,27 +9,29 @@ import { environment } from '../../environments/environment.development';
 })
 
 export class UserService {
+  api = environment.backend.userApi;
+
   constructor(private http: HttpClient) {
 
   }
 
   getUsers(): Observable<User[]> {
 
-    const api = environment.backend.userApi;
 
-    return this.http.get<User[]>(api);
+    return this.http.get<User[]>(this.api);
   }
 
   addUser(user: any): Observable<User> {
-    return of();
+
+    return this.http.post<User>(this.api, user);
   }
 
   updateUser(user: any): Observable<User> {
-    return of();
+    return this.http.put<User>(this.api + '/' + user.id, user);
   }
 
-  deleteUser(id: string): Observable<User> {
-    return of();
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(this.api + '/' + id);
   }
 
   getFilterUsers(action: { searchQuery: string, status: string }): Observable<User[]> {

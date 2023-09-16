@@ -1,3 +1,44 @@
-<div>
-  <h1>Welcome user {{userId}}</h1>
+<div class="big-wrapper m-10">
+  <h1 class="font-bold text-4xl">User Details</h1>
+
+  <div class="wrapper w-1/3 mt-3" *ngIf="!isEdited">
+    <div class="grid grid-cols-2">
+      <h1 class="inline-block font-bold text-xl g">Username:
+      </h1>
+      <p class="inline-block ml-10 text-xl">{{user.username == undefined ? ' ' : user.username}}</p>
+
+    </div>
+    <div class="grid grid-cols-2">
+      <h1 class="inline-block font-bold text-xl">Name:
+      </h1>
+      <p
+        class="inline-block ml-10 text-xl">{{user.firstname == undefined ? ' ' : user.firstname + ' ' + user.lastname}}</p>
+    </div>
+    <div class="grid grid-cols-2">
+      <h1 class="inline-block font-bold text-xl">Phone number:
+      </h1>
+      <p class="inline-block ml-10 text-xl">{{user.phoneNumber == undefined ? ' ' : user.phoneNumber}}</p>
+    </div>
+    <div class="grid grid-cols-2">
+      <h1 class="inline-block font-bold text-xl">Status:
+      </h1>
+      <p class="inline-block ml-10 text-xl">{{user.status == undefined ? ' ' : user.status}}</p>
+    </div>
+    <hr class="mt-3">
+    <div class="grid grid-cols-2">
+      <div></div>
+      <div class="mt-5">
+        <button class="float-left" mat-raised-button style="background: red;color: white" (click)="onDelete()">Delete
+        </button>
+        <button class="float-right" mat-raised-button color="primary" (click)="isEdited=true">Edit</button>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="wrapper p-4 w-1/2" *ngIf="isEdited">
+    <app-form-template [user]="user" [isEdited]="true" (onCanceling)="onCancel()"
+                       (onUpdate)="onUpdate($event)"></app-form-template>
+  </div>
 </div>

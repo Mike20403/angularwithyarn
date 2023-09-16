@@ -1,5 +1,5 @@
 import {
-  ActionReducerMap, createFeatureSelector, createSelector,
+  ActionReducerMap, createAction, createFeatureSelector, createSelector,
   MetaReducer
 } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
@@ -16,13 +16,16 @@ export const selectUserState = createFeatureSelector<UserState>('users');
 // Use userAdapter to generate selectors for entities
 export const {
   selectAll,
-  selectEntities
+  selectEntities,
+
 } = userAdapter.getSelectors(selectUserState);
 export const selectUserEntities = selectEntities;
 export const selectAllUsers = selectAll;
+export const selectUserError = createSelector(selectUserState,
+  (state) => state.error);
 // Create a selector to get a user by their ID
-export const selectUserById = () =>
-  createSelector(selectUserEntities, (entities) => entities);
+export const selectUserById = (userid: string) =>
+  createSelector(selectUserEntities, (entities) => entities[userid]);
 
 export interface State {
   router: RouterReducerState<any>;
@@ -30,7 +33,10 @@ export interface State {
   users: UserState;
 }
 
+
 export const selectState = (state: State) => state;
+export const selectisEdited = createSelector(selectState, (state) =>
+  state.users.isEdited);
 export const selectAuthState = (state: State) => state.authState;
 export const selectIsLoading = createSelector(
   selectState,

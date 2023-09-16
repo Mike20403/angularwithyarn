@@ -1,14 +1,22 @@
 // user.effects.ts
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UserService } from '../../../services/user.service';
 import * as userActions from './user.actions';
+import { User } from '../../../model/User';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { State } from '../../../reducers';
+import { loadUsers } from './user.actions';
 
 @Injectable()
 export class UserEffects {
-  constructor(private actions$: Actions, private userService: UserService) {
+  constructor(private actions$: Actions, private userService: UserService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private store: Store<State>) {
   }
 
   loadUsers$ = createEffect(() =>
@@ -37,25 +45,52 @@ export class UserEffects {
   addUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(userActions.addUser),
-      switchMap((action) =>
-        this.userService.addUser(action.user).pipe(
-          map((user: any) => userActions.addUserSuccess({ user })),
-          catchError((error) => of(userActions.addUserFailure({ error: error.message })))
-        )
+      switchMap((action: {
+          username: string, password: string, firstname: string, lastname: string, phoneNumber: string,
+          status: string
+        }) =>
+          this.userService.addUser(action).pipe(
+            map((user: User) => userActions.addUserSuccess({ user })),
+            catchError((error) => {
+              console.log(error);
+              return of(userActions.addUserFailure({ error: error.error.errors[0].message }));
+            })
+          )
       )
     )
+  );
+
+  $addUserSuccess = createEffect(
+    () => this.actions$.pipe(
+      ofType(userActions.addUserSuccess),
+      tap((action) => {
+        console.log(action.user.id);
+        this.router.navigate(['/users', action.user.id],);
+        return of();
+      })
+    ), { dispatch: false }
   );
 
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(userActions.updateUser),
       switchMap((action) =>
-        this.userService.updateUser(action.user).pipe(
+        this.userService.updateUser({ ...action }).pipe(
           map((user: any) => userActions.updateUserSuccess({ user })),
           catchError((error) => of(userActions.updateUserFailure({ error: error.message })))
         )
       )
     )
+  );
+  updateUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(userActions.updateUserSuccess),
+        tap(() => {
+          this.store.dispatch(loadUsers());
+
+        })
+      ), { dispatch: false }
   );
 
   deleteUser$ = createEffect(() =>
@@ -63,10 +98,20 @@ export class UserEffects {
       ofType(userActions.deleteUser),
       switchMap((action) =>
         this.userService.deleteUser(action.id).pipe(
-          map(() => userActions.deleteUserSuccess({ id: action.id })),
+          map(() => userActions.deleteUserSuccess({ mess: action.id })),
           catchError((error) => of(userActions.deleteUserFailure({ error: error.message })))
         )
       )
     )
+  );
+  deleteUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(userActions.deleteUserSuccess),
+        tap(() => {
+          this.store.dispatch(loadUsers());
+          this.router.navigate(['/users']);
+        })
+      ), { dispatch: false }
   );
 }

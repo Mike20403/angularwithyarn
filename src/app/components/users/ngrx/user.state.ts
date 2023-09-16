@@ -11,7 +11,8 @@ export interface UserState extends EntityState<User> {
   filter: {
     searchQuery: string,
     status: string
-  }
+  },
+  isEdited: boolean,
 }
 
 export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>();
@@ -19,6 +20,7 @@ export const userAdapter: EntityAdapter<User> = createEntityAdapter<User>();
 export const initialUserState: UserState = userAdapter.getInitialState({
   // Define initial state properties here if needed
   selectedId: '',
+  isEdited: false,
   loading: false,
   error: '',
   filter: {
