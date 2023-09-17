@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent {
+  hidden = false;
 
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
+  }
 }

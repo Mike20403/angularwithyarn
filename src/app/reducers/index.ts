@@ -49,6 +49,9 @@ export const selectPaginator = createSelector(
 export const selectisEdited = createSelector(selectState, (state) =>
   state.users.isEdited);
 export const selectAuthState = (state: State) => state.authState;
+export const selectAuthToken = createSelector(selectState,
+  (state) => state.authState.user?.token
+)
 export const selectIsLoading = createSelector(
   selectState,
   (state) => state.authState.isLoading
